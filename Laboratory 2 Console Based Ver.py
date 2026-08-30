@@ -10,6 +10,10 @@ course = input("Enter course: ")
 
 
 #=====Subject Managenment=====#
+'''NOTE: Unsure pa me if this should be a fixed selection of subjects or defined by the user sya
+but if ever, pwede naman tayong mag fixed selection then the user just enters the key of the subjects sa list, para
+pwede rin checkboxes sa tkinter implementation'''
+
 print("\n=======MANAGE SUBJECTS=======\n")
 
 subjects = []
