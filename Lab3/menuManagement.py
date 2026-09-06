@@ -39,10 +39,7 @@ class MenuManagement:
         print("\n<===== Tom's Best Cuisine Menu =====>")
 
         for itemId, item in self.menu.items():
-            print(
-                f"{itemId}. {item['item']} - "
-                f"₱{item['price']:.2f}"
-            )
+            print(f"{itemId}. {item['item']} - ₱{item['price']:.2f}")
 
     def viewItemDetails(self):
         self.displayMenu()
@@ -53,7 +50,7 @@ class MenuManagement:
             print("Please enter a valid number.")
             return
 
-        item = self.menu.get(itemId)
+        item = self.getItem(itemId)
 
         if item is None:
             print("Item not found.")
