@@ -3,9 +3,6 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
-from customerManagement import CustomerManagement
-from orderProcessing import OrderProcessing
-
 
 class Payment(ABC):
     @abstractmethod
@@ -47,10 +44,7 @@ class PaymentAndDelivery:
     def confirmAddress(self):
         customer = self.customerManagement.currentCustomer
 
-        print(
-            f"\nCurrent delivery address: "
-            f"{customer.deliveryAddress}"
-        )
+        print(f"\nCurrent delivery address: {customer.deliveryAddress}")
 
         choice = input("Use this address? [Y/N]: ").strip().lower()
 
@@ -72,7 +66,6 @@ class PaymentAndDelivery:
 
         self.customerManagement.setDelvAdd(newAddress)
         self.customerManagement.save()
-
         print("Delivery address updated.")
         return True
 
@@ -117,8 +110,7 @@ class PaymentAndDelivery:
             print("Payment failed.")
             return False
 
-        orderId = "ORD-" + datetime.now().strftime("%Y%m%d%H%M%S")
-
+        orderId = "ORD-" + datetime.now().strftime("%Y%m%d%H%M%S%f")
         self.customerManagement.addOrder(orderId)
 
         self.orderProcessing.cart.clear()
@@ -127,7 +119,6 @@ class PaymentAndDelivery:
         print(f"\nOrder {orderId} confirmed.")
         print("Payment successful.")
         print("Delivery status: Completed")
-
         return True
 
     def viewCompletedTransactions(self):
