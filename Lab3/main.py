@@ -12,8 +12,7 @@ def customerMenu(customerManagement):
         print("[1] View Profile")
         print("[2] Edit Profile")
         print("[3] Save")
-        print("[4] Discard Changes")
-        print("[5] Return")
+        print("[4] Return")
 
         try:
             option = int(input("Select an option: "))
@@ -29,9 +28,6 @@ def customerMenu(customerManagement):
             customerManagement.save()
             print("Changes saved.")
         elif option == 4:
-            customerManagement.discard()
-            print("Changes discarded.")
-        elif option == 5:
             break
         else:
             print("Invalid option.")
