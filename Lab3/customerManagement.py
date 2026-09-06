@@ -264,15 +264,5 @@ class CustomerManagement:
 
         self._writeUsers(users)
 
-    def discard(self):
-        user = self._findUser(self.currentCustomer.username)
-
-        self.currentCustomer = Customer(
-            user["username"],
-            user["password"],
-            user["phoneNumber"],
-            user["deliveryAddress"]
-        )
-
     def logout(self):
         self.currentCustomer = None
