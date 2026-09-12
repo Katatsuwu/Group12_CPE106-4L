@@ -56,5 +56,6 @@ def main():
             print("Please enter 1, 2, 3, or 4.")
 
 
+# Run the program
 if _name_ == "_main_":
     main()
