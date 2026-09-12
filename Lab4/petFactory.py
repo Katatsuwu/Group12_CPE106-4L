@@ -1,13 +1,20 @@
-class petFactory():
-    def __init__(self):
-        self.pets = []
+from petManagement import Pet
 
-    def create_pet(self, pet_type, name):
-        if pet_type == "dog":
-            pet = Dog(name)
-        elif pet_type == "cat":
-            pet = Cat(name)
-        else:
+
+class PetFactory:
+    """Factory for creating supported pet types."""
+
+    SUPPORTED_TYPES = ("dog", "cat", "bird", "rabbit")
+
+    @staticmethod
+    def create_pet(pet_id, name, pet_type, owner_id, owner=None):
+        pet_type = pet_type.strip().lower()
+
+        if pet_type not in PetFactory.SUPPORTED_TYPES:
             raise ValueError("Unknown pet type")
-        self.pets.append(pet)
-        return pet
+
+        return Pet(pet_id, name, pet_type.capitalize(), owner_id, owner)
+
+
+# Backward-compatible name for the group's original code.
+petFactory = PetFactory

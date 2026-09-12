@@ -1,26 +1,26 @@
 from petOwner import PetOwner
+from clinicDatabase import ClinicDatabase
 
 
 class OwnerManagement:
 
-    def __init__(self):
-        self.owners = []
+    def __init__(self, database=None):
+        self.database = database or ClinicDatabase.get_instance()
 
-    # Register a new pet owner
+    @property
+    def owners(self):
+        return self.database.owners
+
     def register_owner(self, owner):
-        self.owners.append(owner)
+        if self.find_owner(owner.get_owner_id()) is not None:
+            return False
+        self.database.add_owner(owner)
+        return True
 
-    # Find an owner using Owner ID
     def find_owner(self, owner_id):
-        for owner in self.owners:
-            if owner.get_owner_id() == owner_id:
-                return owner
+        return self.database.find_owner(owner_id)
 
-        return None
-
-    # Display all registered owners
     def display_owners(self):
-
         if len(self.owners) == 0:
             print("\nNo registered pet owners.")
             return
@@ -33,15 +33,10 @@ class OwnerManagement:
             print(f"Contact Number: {owner.get_contact_number()}")
             print("--------------------------------")
 
-
-    # Register owner if not already registered
     def register_new_owner(self):
-
         print("\n===== NEW OWNER REGISTRATION =====")
 
         owner_id = input("Enter Owner ID: ")
-
-        # Check if owner already exists
         existing_owner = self.find_owner(owner_id)
 
         if existing_owner is not None:
@@ -52,11 +47,7 @@ class OwnerManagement:
         name = input("Enter Owner Name: ")
         contact_number = input("Enter Contact Number: ")
 
-        new_owner = PetOwner(
-            owner_id,
-            name,
-            contact_number
-        )
+        new_owner = PetOwner(owner_id, name, contact_number)
 
         self.register_owner(new_owner)
 

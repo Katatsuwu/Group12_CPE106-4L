@@ -1,3 +1,6 @@
+from clinicDatabase import ClinicDatabase
+
+
 class Appointment:
     def __init__(self, appointment_id, owner_id, pet_name, date, time):
         self.__appointment_id = appointment_id
@@ -7,7 +10,6 @@ class Appointment:
         self.__time = time
         self.__status = "Scheduled"
 
-    # Getters
     def get_appointment_id(self):
         return self.__appointment_id
 
@@ -26,7 +28,6 @@ class Appointment:
     def get_status(self):
         return self.__status
 
-    # Setters
     def set_date(self, date):
         self.__date = date
 
@@ -49,27 +50,25 @@ class Appointment:
 
 class AppointmentManagement:
 
-    def __init__(self):
-        self.appointments = []
+    def __init__(self, database=None):
+        self.database = database or ClinicDatabase.get_instance()
 
-    # Schedule a new appointment
+    @property
+    def appointments(self):
+        return self.database.appointments
+
     def schedule_appointment(self, appointment):
-        self.appointments.append(appointment)
+        if self.find_appointment(appointment.get_appointment_id()) is not None:
+            return False
+        self.database.add_appointment(appointment)
         return True
 
-    # View all appointment schedules
     def get_appointments(self):
-        return self.appointments
+        return self.database.appointments
 
-    # Find an appointment using Appointment ID
     def find_appointment(self, appointment_id):
-        for appointment in self.appointments:
-            if appointment.get_appointment_id() == appointment_id:
-                return appointment
+        return self.database.find_appointment(appointment_id)
 
-        return None
-
-    # Cancel an appointment
     def cancel_appointment(self, appointment_id):
         appointment = self.find_appointment(appointment_id)
 
@@ -77,9 +76,9 @@ class AppointmentManagement:
             return False
 
         appointment.set_status("Cancelled")
+        self.database.save_data()
         return True
 
-    # Update appointment status (Scheduled, Completed, Cancelled)
     def update_status(self, appointment_id, status):
         valid_statuses = ["Scheduled", "Completed", "Cancelled"]
 
@@ -92,9 +91,9 @@ class AppointmentManagement:
             return False
 
         appointment.set_status(status)
+        self.database.save_data()
         return True
 
-    # Display all appointment schedules
     def display_appointments(self):
         if not self.appointments:
             print("No scheduled appointments.")

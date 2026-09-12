@@ -1,61 +1,102 @@
 from ownerManagement import OwnerManagement
+from petManagement import PetManagement
+from petFactory import PetFactory
+from appointmentManagement import Appointment, AppointmentManagement
+from clinicDatabase import ClinicDatabase
 
 
 def main():
-
-    ownerManagement = OwnerManagement()
+    database = ClinicDatabase.get_instance()
+    ownerManagement = OwnerManagement(database)
+    petManagement = PetManagement(database)
+    appointmentManagement = AppointmentManagement(database)
 
     while True:
-
         print("\n======================================")
         print("   PAWS AND CARE VETERINARY CLINIC")
-        print("        PET OWNER MANAGEMENT")
         print("======================================")
-
-        print("\n[1] Register / Check Pet Owner")
+        print("[1] Register Pet Owner")
         print("[2] View All Pet Owners")
-        print("[3] Search Pet Owner")
-        print("[4] Exit")
+        print("[3] Add Pet Record")
+        print("[4] View Pet Records")
+        print("[5] Schedule Appointment")
+        print("[6] View Appointments")
+        print("[7] Cancel Appointment")
+        print("[8] Exit")
 
         choice = input("\nEnter your choice: ")
 
-        # Register or check owner
         if choice == "1":
-
             ownerManagement.register_new_owner()
 
-        # View all owners
         elif choice == "2":
-
             ownerManagement.display_owners()
 
-        # Search owner
         elif choice == "3":
-
-            print("\n===== SEARCH PET OWNER =====")
-
+            print("\n===== ADD PET RECORD =====")
+            pet_id = input("Enter Pet ID: ")
+            name = input("Enter Pet Name: ")
+            pet_type = input("Enter Pet Type (Dog/Cat/Bird/Rabbit): ")
             owner_id = input("Enter Owner ID: ")
 
             owner = ownerManagement.find_owner(owner_id)
-
-            if owner is not None:
-                owner.display_info()
-            else:
+            if owner is None:
                 print("\nOwner not found.")
+                continue
 
-        # Exit
+            try:
+                pet = PetFactory.create_pet(
+                    pet_id, name, pet_type, owner_id, owner
+                )
+            except ValueError as error:
+                print(f"\n{error}")
+                continue
+
+            if petManagement.add_pet(pet):
+                print("\nPet added successfully!")
+                pet.display_info()
+            else:
+                print("\nPet ID already exists.")
+
         elif choice == "4":
+            petManagement.display_pets()
 
+        elif choice == "5":
+            print("\n===== SCHEDULE APPOINTMENT =====")
+            appointment_id = input("Enter Appointment ID: ")
+            owner_id = input("Enter Owner ID: ")
+            pet_name = input("Enter Pet Name: ")
+            date = input("Enter Date: ")
+            time = input("Enter Time: ")
+
+            appointment = Appointment(
+                appointment_id, owner_id, pet_name, date, time
+            )
+
+            if appointmentManagement.schedule_appointment(appointment):
+                print("\nAppointment scheduled successfully!")
+            else:
+                print("\nAppointment ID already exists.")
+
+        elif choice == "6":
+            appointmentManagement.display_appointments()
+
+        elif choice == "7":
+            appointment_id = input("\nEnter Appointment ID: ")
+
+            if appointmentManagement.cancel_appointment(appointment_id):
+                print("\nAppointment cancelled successfully!")
+            else:
+                print("\nAppointment not found.")
+
+        elif choice == "8":
             print("\nThank you for using")
             print("Paws and Care Veterinary Clinic!")
             break
 
         else:
-
             print("\nInvalid choice.")
-            print("Please enter 1, 2, 3, or 4.")
 
 
-# Run the program
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
