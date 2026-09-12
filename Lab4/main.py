@@ -11,7 +11,8 @@ def main():
     petManagement = PetManagement(database)
     appointmentManagement = AppointmentManagement(database)
 
-    while True:        print("\n===========================================")
+    while True:        
+        print("\n===========================================")
         print(" 🐾🏥 PAWS AND CARE VETERINARY CLINIC 🏥🐾")
         print("===========================================")
         print("[1] Register Pet Owner")
