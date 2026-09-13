@@ -1,3 +1,5 @@
+# By: Santi Gabriel C. De Leon
+
 class Pet:
     def __init__(self, pet_id, name, pet_type, owner_id, owner=None):
         self.__pet_id = pet_id

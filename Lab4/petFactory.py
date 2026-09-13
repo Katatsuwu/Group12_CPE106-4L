@@ -1,3 +1,5 @@
+# By: Emmanuel Gabriel M. Visto
+
 from petManagement import Pet
 
 

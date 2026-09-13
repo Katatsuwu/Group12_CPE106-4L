@@ -1,3 +1,5 @@
+# By: Emmanuel Gabriel M. Visto
+
 import csv
 import os
 

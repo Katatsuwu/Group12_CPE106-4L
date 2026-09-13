@@ -1,3 +1,5 @@
+# By: Sean Patrick A. Relucio
+
 from clinicDatabase import ClinicDatabase
 
 
