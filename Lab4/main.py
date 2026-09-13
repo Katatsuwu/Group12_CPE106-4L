@@ -22,7 +22,8 @@ def main():
         print("[5] Schedule Appointment")
         print("[6] View Appointments")
         print("[7] Cancel Appointment")
-        print("[8] Exit")
+        print("[8] Update Appointment Status")
+        print("[9] Exit")
 
         choice = input("\nEnter your choice: ")
 
@@ -90,6 +91,15 @@ def main():
                 print("\nAppointment not found.")
 
         elif choice == "8":
+            appointment_id = input("\nEnter Appointment ID: ")
+            status = input("Enter Status (Scheduled/Completed/Cancelled): ").strip().capitalize()
+
+            if appointmentManagement.update_status(appointment_id, status):
+                print("\nAppointment status updated successfully!")
+            else:
+                print("\nInvalid appointment ID or status.")
+
+        elif choice == "9":
             print("\nThank you for using")
             print("Paws and Care Veterinary Clinic!")
             break

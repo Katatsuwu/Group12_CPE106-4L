@@ -14,7 +14,3 @@ class PetFactory:
             raise ValueError("Unknown pet type")
 
         return Pet(pet_id, name, pet_type.capitalize(), owner_id, owner)
-
-
-# Backward-compatible name for the group's original code.
-petFactory = PetFactory

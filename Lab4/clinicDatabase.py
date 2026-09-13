@@ -31,8 +31,6 @@ class ClinicDatabase:
         return os.path.join(self.base_dir, filename)
 
     def load_data(self):
-        # Imports are kept local so the database remains compatible with
-        # the existing project files.
         from petOwner import PetOwner
         from petManagement import Pet
 
