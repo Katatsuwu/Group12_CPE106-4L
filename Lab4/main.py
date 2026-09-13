@@ -1,4 +1,4 @@
-# By: Emmanuel Gabriel M. Visto
+# By: Emmanuel Gabriel M. Visto and Roxanne-Mae B. Rabimbi
 
 from ownerManagement import OwnerManagement
 from petManagement import PetManagement
