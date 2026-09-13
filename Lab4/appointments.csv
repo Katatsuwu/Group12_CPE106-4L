@@ -1,1 +1,4 @@
 appointment_id,owner_id,pet_name,date,time,status
+20180903,9116769420,GalaxyDestroyer,2026-09-11,11:00 AM,Completed
+20200913,1234567890,Atlantean,2026-09-15,1:00 PM,Cancelled
+20190808,0987654321,UsadaPekora,2026-09-16,2:00 PM,Scheduled
