@@ -23,62 +23,62 @@ class ClinicTests(unittest.TestCase):
         self.db.clear_all()
 
     def test_register_pet_owner(self):
-        owner = PetOwner("O001", "Juan Dela Cruz", "09123456789")
+        owner = PetOwner("20180217", "Mori Calliope", "09012345678")
 
         self.assertTrue(self.owner_management.register_owner(owner))
-        self.assertIsNotNone(self.owner_management.find_owner("O001"))
+        self.assertIsNotNone(self.owner_management.find_owner("20180217"))
         self.assertEqual(
-            self.owner_management.find_owner("O001").get_name(),
-            "Juan Dela Cruz"
+            self.owner_management.find_owner("20180217").get_name(),
+            "Mori Calliope"
         )
 
     def test_add_pet_record(self):
-        owner = PetOwner("O001", "Juan Dela Cruz", "09123456789")
+        owner = PetOwner("20210411", "Gawr Gura", "09123456789")
         self.owner_management.register_owner(owner)
 
-        pet = PetFactory.create_pet("P001", "Bruno", "Dog", "O001", owner)
+        pet = PetFactory.create_pet("20210411", "Ame", "Dog", "20210411", owner)
 
         self.assertTrue(self.pet_management.add_pet(pet))
-        self.assertIsNotNone(self.pet_management.find_pet("P001"))
+        self.assertIsNotNone(self.pet_management.find_pet("20210411"))
         self.assertEqual(
-            self.pet_management.find_pet("P001").get_pet_type(), "Dog"
+            self.pet_management.find_pet("20210411").get_pet_type(), "Dog"
         )
         self.assertEqual(
-            self.pet_management.find_pet("P001").get_owner_id(), "O001"
+            self.pet_management.find_pet("20210411").get_owner_id(), "20210411"
         )
 
     def test_schedule_appointment(self):
-        owner = PetOwner("O001", "Juan Dela Cruz", "09123456789")
+        owner = PetOwner("20210909", "IRyS", "09234567890")
         self.owner_management.register_owner(owner)
-        pet = PetFactory.create_pet("P001", "Bruno", "Dog", "O001", owner)
+        pet = PetFactory.create_pet("20210909", "Hope", "Cat", "20210909", owner)
         self.pet_management.add_pet(pet)
 
         appointment = Appointment(
-            "A001", "O001", "Bruno", "2026-09-15", "10:00 AM"
+            "20210909", "20210909", "Hope", "2026-09-15", "10:00 AM"
         )
 
         self.assertTrue(
             self.appointment_management.schedule_appointment(appointment)
         )
         self.assertIsNotNone(
-            self.appointment_management.find_appointment("A001")
+            self.appointment_management.find_appointment("20210909")
         )
         self.assertEqual(
-            self.appointment_management.find_appointment("A001").get_status(),
+            self.appointment_management.find_appointment("20210909").get_status(),
             "Scheduled"
         )
 
     def test_cancel_appointment(self):
         appointment = Appointment(
-            "A001", "O001", "Bruno", "2026-09-15", "10:00 AM"
+            "20201127", "20201127", "Pekora", "2026-09-16", "2:00 PM"
         )
         self.appointment_management.schedule_appointment(appointment)
 
         self.assertTrue(
-            self.appointment_management.cancel_appointment("A001")
+            self.appointment_management.cancel_appointment("20201127")
         )
         self.assertEqual(
-            self.appointment_management.find_appointment("A001").get_status(),
+            self.appointment_management.find_appointment("20201127").get_status(),
             "Cancelled"
         )
 
